@@ -8,7 +8,7 @@ const refs = {
   formMessage: document.querySelector('[name="message"]'),
 };
 
-const formData = {};
+let formData = JSON.parse(localStorage.getItem(FEEDBACK_STORAGE_KEY)) || {};
 
 refs.form.addEventListener('input', setLocalStorage);
 refs.form.addEventListener('submit', throttle(onFormSubmit, 500));
@@ -25,9 +25,10 @@ function onFormSubmit(evt) {
   if (!refs.formEmail.value || !refs.formMessage.value) {
     alert('Please, fill all fields. Thanks!');
   } else {
-    console.log(JSON.parse(localStorage[FEEDBACK_STORAGE_KEY]));
+    console.log(formData);
     evt.currentTarget.reset();
     localStorage.removeItem(FEEDBACK_STORAGE_KEY);
+    formData = {};
   }
 }
 
